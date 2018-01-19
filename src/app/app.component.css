@@ -1,0 +1,38 @@
+.outer {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.inner {
+    margin-left: auto;
+    margin-right: auto; 
+    width: 300px;
+    text-align: center;
+}
+
+button.btn {
+    -webkit-border-radius: 8;
+    -moz-border-radius: 8;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 5px 10px 5px 10px;
+    text-decoration: none;
+    width: 200px;
+    border: 2px solid white;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+button.btn img {
+    width: 150px;
+    margin: 10px;
+}
+
