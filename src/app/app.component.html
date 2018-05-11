@@ -6,25 +6,25 @@
             <b>Welcome</b>
 
         </div>
-        <div class="inner" *ngIf="payment != null && selectedCurrency == null && paymentComplete == false">
+        <div class="inner" *ngIf="payment != null && cryptoPayment == null && paymentComplete == false">
                 
-            <span style="font-weight: bold; font-size: 30pt;">$ {{payment.amount | numeralPipe : '0,000.00' }}</span>
+            <span style="font-weight: bold; font-size: 30pt;">$ {{payment.amountUSD | numeralPipe : '0,000.00' }}</span>
             <br/>&nbsp;<br/>
             <span style="font-weight: normal; font-size: 14pt;">Choose your currency:</span>
             <br/>
            
-                <button *ngFor="let currency of currencies" class="btn currencyBtn" (click)="selectCurrency(currency)">
+                <button *ngFor="let currency of payment.amountCryptos" class="btn currencyBtn" (click)="selectCurrency(currency)">
                     <img src="{{'assets/' + currency.symbol + '.png'}}" /><br/>
-                    {{payment.amount * currency.rate | numeralPipe : '0,000.00000000' }} {{currency.symbol}}
+                    {{currency.amount | numeralPipe : '0,000.00000000' }} {{currency.symbol}}
                 </button>
             
         </div>
-        <div class="inner" *ngIf="payment != null && selectedCurrency != null && paymentComplete == false">
-            <span style="font-weight: bold; font-size: 30pt;">$ {{payment.amount | numeralPipe : '0,000.00' }}</span>
+        <div class="inner" *ngIf="payment != null && cryptoPayment != null && paymentComplete == false">
+            <span style="font-weight: bold; font-size: 30pt;">$ {{payment.amountUSD | numeralPipe : '0,000.00' }}</span>
             <br/>&nbsp;<br/>
-            <img style="width: 200px" src="{{'assets/' + selectedCurrency.symbol + '.png'}}" />
+            <img style="width: 200px" src="{{'assets/' + cryptoPayment.symbol + '.png'}}" />
             <br/>&nbsp;<br/>
-            <span style="font-weight: normal; font-size: 14pt;">{{payment.amount * selectedCurrency.rate | numeralPipe : '0,000.00000000' }} {{selectedCurrency.symbol}}<br/></span>
+            <span style="font-weight: normal; font-size: 14pt;">{{cryptoPayment.amount | numeralPipe : '0,000.00000000' }} {{cryptoPayment.symbol}}<br/></span>
             <br/>
             <qr-code [value]="paymentJsonValue" [size]="200"></qr-code>
         </div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PaymentModel } from './models/paymentmodel';
+import { PaymentModel, PaymentModelCryptoAmount } from './models/paymentmodel';
 import { PaymentsService } from './payments.service';
 import { Currency } from './models/currency';
 
@@ -10,21 +10,18 @@ import { Currency } from './models/currency';
 })
 export class AppComponent {
   payment : PaymentModel = null;
-  currencies : Currency[] = [];
-  selectedCurrency : Currency = null;
+  cryptoPayment : PaymentModelCryptoAmount = null;
   paymentJsonValue : string = "";
   paymentComplete : boolean = false;
   constructor(private paymentsService : PaymentsService) {
     paymentsService.getPayment().subscribe((payment) => {
-      this.paymentsService.getCurrencies().subscribe((curr) => {
-        this.currencies = curr;
         this.payment = payment;
-      });
-      
+        if(this.payment != null)
+          console.log(this.payment.id);
     });
 
     this.paymentsService.paymentComplete.subscribe((payment) => {
-      if(this.payment.id == payment.id) {
+      if(this.payment != null && this.payment.id == payment.id) {
         this.paymentComplete = true;
         setTimeout(this.reset.bind(this), 5000);
       }
@@ -35,14 +32,15 @@ export class AppComponent {
     this.payment = null;
     this.paymentComplete = false;
     this.paymentJsonValue = "";
-    this.selectedCurrency = null;
+    this.cryptoPayment = null;
   }
   
-  selectCurrency(currency : Currency) { 
-    this.selectedCurrency = currency;
+  selectCurrency(currency : PaymentModelCryptoAmount) { 
+    this.cryptoPayment = currency;
     var payment = {
-      amount : payment.amount * currency.rate,
-      currency : currency.symbol,
+      id : this.payment.id,
+      amount : this.cryptoPayment.amount,
+      currency : this.cryptoPayment.symbol,
       recipient : 'ln123456789000987654321acbcfbaefbce'
     }
     this.paymentJsonValue = JSON.stringify(payment);

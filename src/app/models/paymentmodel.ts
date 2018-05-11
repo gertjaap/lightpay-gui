@@ -1,4 +1,10 @@
 export class PaymentModel {
     id : string;
-    amount? : number;
+    amountUSD? : number;
+    amountCryptos? : PaymentModelCryptoAmount[];
+}
+
+export class PaymentModelCryptoAmount {
+    symbol: string;
+    amount: number;
 }
